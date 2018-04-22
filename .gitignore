@@ -1,0 +1,5 @@
+/.idea/
+/src/rates/vendor/
+/bin/
+/pkg/
+/*.iml
