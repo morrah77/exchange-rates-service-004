@@ -5,7 +5,11 @@ services:
     restart: unless-stopped
     depends_on:
       - postgres
-    command: bash -c "sh  /go/src/github.com/morrah77/rates/bin/main --scrap-url https://wex.nz/api/3 --scrap-intervall 2s --listen-addr :8080 --api-path /rates/v0 --storage postgres --dsn \"host=postgres port=5432 user=postgres password=changeit dbname=main sslmode=disable\""
+    command: bash -c "/go/src/github.com/morrah77/rates/bin/main --scrap-url https://wex.nz/api/3 --scrap-intervall 2s --listen-addr :8080 --api-path /rates/v0 --storage postgres --dsn 'host=postgres port=5432 user=postgres password=changeit dbname=main sslmode=disable'"
+    ports:
+      - 8080:8080
+    networks:
+      - rates
   postgres:
     image: postgres:9.6
     restart: unless-stopped
@@ -15,6 +19,10 @@ services:
       POSTGRES_DB: main
     volumes:
       - pgdata:/var/lib/postgresql/data
+    networks:
+      - rates
 volumes:
   pgdata:
     driver: local
+networks:
+  rates:

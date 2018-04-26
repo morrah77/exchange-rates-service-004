@@ -44,19 +44,25 @@ Technologies choice is up to implementer / Выбор технологий, сп
   `bin/main --scrap-url https://wex.nz/api/3 --scrap-intervall 2s --listen-addr :8080 --api-path /rates/v0 --storage postgres --dsn "host=<IP_address> port=5432 user=postgres password=changeit dbname=main sslmode=disable"`
 
 
-  - with docker `docker-compose -p rates up -d`
+  - with docker `docker-compose -f docker-compose.yml -p rates up -d`
 
 ###Stop
 
-  - locally `docker run postgres:9.6`
+  - locally `docker stop postgres:9.6`
   
-  - with docker `docker-compose -p rates down`
+  - with docker `docker-compose -f docker-compose.yml -p rates down`
+  
+###Logs
+
+ - with docker
+ 
+ `docker logs -f rates_rates-service_1`
+ 
+ `docker logs -f rates_postgres_1`
 
 ###Test
 
 ####Unit tests for packages
-
-``
 
 `go test -race .src/rates/api && go test -race .src/rates/storage && go test -race ./src/rates/scrapper/`
 
